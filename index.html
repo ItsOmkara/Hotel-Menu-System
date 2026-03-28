@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Relax | Restaurant & Bar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-dark: #1B4332;
+      --primary: #2D6A4F;
+      --accent: #BC6C25;
+      --accent-light: #DDA15E;
+      --bg-warm: #FEFAE0;
+      --bg-cream: #FAEDCD;
+      --text-dark: #283618;
+      --text-light: #606C38;
+      --white: #FFFFFF;
+      --shadow: 0 4px 20px rgba(27, 67, 50, 0.08);
+      --shadow-lg: 0 10px 40px rgba(27, 67, 50, 0.12);
+      --radius: 16px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header & Navigation */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(188, 108, 37, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .brand h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-location {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.875rem 1.25rem 0.875rem 3rem;
+      border: 2px solid rgba(188, 108, 37, 0.15);
+      border-radius: 50px;
+      font-size: 0.95rem;
+      background: var(--bg-warm);
+      color: var(--text-dark);
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(188, 108, 37, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: var(--primary-dark);
+      color: var(--white);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .cart-btn:hover {
+      transform: translateY(-2px);
+      background: var(--primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--white);
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-top: 100px;
+      padding: 3rem 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Category Navigation */
+    .category-nav {
+      position: sticky;
+      top: 80px;
+      background: rgba(254, 250, 224, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      z-index: 100;
+      border-bottom: 1px solid rgba(188, 108, 37, 0.1);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pill {
+      padding: 0.75rem 1.5rem;
+      border: 2px solid transparent;
+      background: var(--white);
+      color: var(--text-dark);
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      box-shadow: var(--shadow);
+    }
+
+    .pill:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-light);
+    }
+
+    .pill.active {
+      background: var(--primary-dark);
+      color: var(--white);
+      border-color: var(--primary-dark);
+    }
+
+    .pill-sub {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .pill-sub.active {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 3rem 0 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(188, 108, 37, 0.1);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-count {
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .menu-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(188, 108, 37, 0.08);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .menu-card.featured {
+      border: 2px solid var(--accent);
+    }
+
+    .menu-card.featured::before {
+      content: '★ Popular';
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.35rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-warm) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .menu-card:hover .card-image img {
+      transform: scale(1.05);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 0.35rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .card-price {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .card-desc {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .size-selector {
+      flex: 1;
+      position: relative;
+    }
+
+    .size-selector select {
+      width: 100%;
+      padding: 0.625rem 2rem 0.625rem 1rem;
+      border: 1.5px solid rgba(188, 108, 37, 0.2);
+      border-radius: var(--radius-sm);
+      background: var(--bg-warm);
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      cursor: pointer;
+      appearance: none;
+      transition: all 0.2s;
+    }
+
+    .size-selector select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .size-selector::after {
+      content: '▼';
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      color: var(--accent);
+      pointer-events: none;
+    }
+
+    .add-btn {
+      background: var(--primary-dark);
+      color: var(--white);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .add-btn:hover {
+      background: var(--primary);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
+    }
+
+    .add-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Cart Sidebar */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .cart-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -450px;
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      background: var(--white);
+      z-index: 2001;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-sidebar.active {
+      right: 0;
+    }
+
+    .cart-header {
+      padding: 2rem;
+      background: var(--primary-dark);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .close-cart {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: var(--white);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-cart:hover {
+      background: rgba(255,255,255,0.25);
+      transform: rotate(90deg);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-light);
+    }
+
+    .cart-empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: var(--bg-warm);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      border: 1px solid rgba(188, 108, 37, 0.1);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .cart-item-meta {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .cart-item-price {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .qty-btn:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .remove-item {
+      background: transparent;
+      border: none;
+      color: #E07A5F;
+      cursor: pointer;
+      font-size: 0.85rem;
+      text-decoration: underline;
+      margin-left: auto;
+    }
+
+    .cart-footer {
+      padding: 2rem;
+      background: var(--bg-warm);
+      border-top: 1px solid rgba(188, 108, 37, 0.1);
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      padding: 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .checkout-btn:hover {
+      background: #a05a1f;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(188, 108, 37, 0.3);
+    }
+
+    .payment-info {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed rgba(188, 108, 37, 0.3);
+      text-align: center;
+    }
+
+    .qr-placeholder {
+      width: 150px;
+      height: 150px;
+      background: var(--white);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-sm);
+      margin: 1rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary-dark);
+      color: var(--white);
+      padding: 3rem 2rem;
+      margin-top: 6rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 1rem;
+      color: var(--accent-light);
+    }
+
+    .footer-section p, .footer-section a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      line-height: 1.8;
+      transition: color 0.2s;
+    }
+
+    .footer-section a:hover {
+      color: var(--accent-light);
+    }
+
+    .contact-numbers {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-top: 0.5rem;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--primary-dark);
+      color: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      box-shadow: var(--shadow-lg);
+      z-index: 3000;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .search-wrapper {
+        order: 3;
+        flex-basis: 100%;
+        max-width: none;
+      }
+
+      .hero {
+        margin-top: 140px;
+        padding: 2rem 1rem;
+      }
+
+      .hero h2 {
+        font-size: 1.75rem;
+      }
+
+      .category-nav {
+        top: 130px;
+        padding: 1rem;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .cart-sidebar {
+        max-width: 100%;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .menu-card {
+      animation: fadeIn 0.6s ease backwards;
+    }
+
+    .menu-card:nth-child(1) { animation-delay: 0.1s; }
+    .menu-card:nth-child(2) { animation-delay: 0.2s; }
+    .menu-card:nth-child(3) { animation-delay: 0.3s; }
+    .menu-card:nth-child(4) { animation-delay: 0.4s; }
+    .menu-card:nth-child(5) { animation-delay: 0.5s; }
+    .menu-card:nth-child(6) { animation-delay: 0.6s; }
+
+    /* Hidden utility */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Auth Modal */
+    .auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .auth-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .auth-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      z-index: 2001;
+      width: 90%;
+      max-width: 450px;
+      max-height: 90vh;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .auth-modal.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .auth-header {
+      background: linear-gradient(135deg, var(--primary-dark), #2c1810);
+      color: var(--white);
+      padding: 1.5rem;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .auth-header h2 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+    }
+
+    .close-auth {
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .close-auth:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .auth-form {
+      padding: 2rem;
+    }
+
+    .auth-form h3 {
+      margin: 0 0 1.5rem 0;
+      color: var(--primary-dark);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e1e5e9;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      transition: all 0.2s;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(188, 108, 37, 0.1);
+    }
+
+    .form-group small {
+      display: block;
+      margin-top: 0.25rem;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 0.875rem;
+      background: linear-gradient(135deg, var(--accent), #d4942e);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(188, 108, 37, 0.3);
+    }
+
+    .auth-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-switch {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .auth-switch a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .auth-switch a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* User Profile Section */
+    .user-profile {
+      position: relative;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s;
+      height: 48px;
+    }
+
+    .user-info:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #d4942e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 8px rgba(188, 108, 37, 0.2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .user-name {
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, var(--accent), #d4942e);
+      color: var(--white);
+      border: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(188, 108, 37, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .auth-modal {
+        width: 95%;
+        max-width: none;
+        margin: 1rem;
+      }
+      
+      .auth-form {
+        padding: 1.5rem;
+      }
+      
+      .user-name {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="nav-container">
+      <div class="brand">
+        <h1>Hotel Relax</h1>
+        <div class="brand-location">
+          <span>📍</span>
+          <span>Raj Chamber, Kothla-Stand, Nagar</span>
+        </div>
+      </div>
+
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search for dishes, drinks...">
+      </div>
+
+      <div class="header-actions">
+        <div id="userSection" class="user-profile">
+          <!-- Login button (shown when not logged in) -->
+          <button id="loginBtn" class="login-btn" onclick="toggleAuthModal()">Sign In</button>
+          
+          <!-- User info (shown when logged in) -->
+          <div id="userInfo" class="user-info hidden" onclick="showUserMenu()">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <span class="user-name" id="userName" style="color: black;">User</span>
+          </div>
+        </div>
+        
+        <button class="cart-btn" onclick="toggleCart()">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Restaurant & Bar</h2>
+    <p>Experience authentic flavors crafted with passion. From traditional starters to premium spirits.</p>
+  </section>
+
+  <!-- Category Navigation -->
+  <nav class="category-nav">
+    <div class="category-pills" id="categoryPills">
+      <button class="pill active" onclick="filterCategory('all')">All Menu</button>
+      <button class="pill" onclick="filterCategory('starters-veg')">Veg Starters</button>
+      <button class="pill" onclick="filterCategory('starters-nonveg')">Non-Veg Starters</button>
+      <button class="pill" onclick="filterCategory('main-veg')">Veg Main Course</button>
+      <button class="pill" onclick="filterCategory('main-nonveg')">Non-Veg Main Course</button>
+      <button class="pill" onclick="filterCategory('rice')">Rice & Breads</button>
+      <button class="pill" onclick="filterCategory('drinks')">Drinks & Bar</button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container" id="menuContainer">
+    <!-- Sections will be dynamically generated -->
+  </main>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>🛒 Your Order</h3>
+      <button class="close-cart" onclick="toggleCart()">✕</button>
+    </div>
+    
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🍽️</div>
+        <p>Your cart is empty</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Add some delicious items!</p>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total Amount</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+      <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
+      <div class="payment-info">
+        <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.5rem;">Free delivery within 5km (10am-11pm)</p>
+        <p style="font-size: 0.75rem; color: var(--text-light);">50% refund on cancellation</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Auth Modal -->
+  <div class="auth-overlay" id="authOverlay" onclick="toggleAuthModal()"></div>
+  <div class="auth-modal" id="authModal">
+    <div class="auth-header">
+      <h2 id="authTitle">Welcome to Hotel Relax</h2>
+      <button class="close-auth" onclick="toggleAuthModal()">✕</button>
+    </div>
+    
+    <!-- Login Form -->
+    <div class="auth-form" id="loginForm">
+      <h3>Sign In</h3>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" required placeholder="Enter your password">
+        </div>
+        <button type="submit" class="auth-btn">Sign In</button>
+      </form>
+      <p class="auth-switch">
+        Don't have an account? 
+        <a href="#" onclick="switchToSignup()">Sign Up</a>
+      </p>
+    </div>
+    
+    <!-- Signup Form -->
+    <div class="auth-form hidden" id="signupForm">
+      <h3>Sign Up</h3>
+      <form onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signupName" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="signupEmail" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label>Phone (Optional)</label>
+          <input type="tel" id="signupPhone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signupPassword" required placeholder="Create a password (min 6 chars)">
+          <small>Minimum 6 characters</small>
+        </div>
+        <div class="form-group">
+          <label>Address (Optional)</label>
+          <textarea id="signupAddress" placeholder="Enter your delivery address" rows="3"></textarea>
+        </div>
+        <button type="submit" class="auth-btn">Create Account</button>
+      </form>
+      <p class="auth-switch">
+        Already have an account? 
+        <a href="#" onclick="switchToLogin()">Sign In</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <span>✓</span>
+    <span id="toastMessage">Added to cart!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Hotel Relax</h4>
+        <p>Serving authentic flavors since 1995. Your destination for quality food and premium drinks.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Manager: Raghavendra Pujari</p>
+        <div class="contact-numbers">
+          📞 8830441800<br>
+          📞 9637333667
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Hours</h4>
+        <p>Open Daily<br>
+        10:00 AM - 11:00 PM<br>
+        Free Delivery under 5km</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 Hotel Relax Restaurant & Bar. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Menu Data
+    const menuData = {
+      'starters-veg': {
+        title: 'Veg Starters',
+        items: [
+          { name: 'Soyabean Chilli', price: 170, image: 'soya bean chilli.png', desc: 'Crispy soya chunks tossed in spicy chilli sauce with onions and capsicum', popular: true },
+          { name: 'Finger Chips', price: 90, image: 'finger chips.png', desc: 'Golden fried potato fingers served with tomato ketchup', popular: false },
+          { name: 'Chana Fry', price: 90, image: 'channa fry.png', desc: 'Spiced chickpeas fried to perfection with Indian herbs', popular: false },
+          { name: 'Green Peas Fry', price: 90, image: 'green peace fry.png', desc: 'Fresh green peas stir-fried with spices and garlic', popular: false },
+          { name: 'Paneer Chilli', price: 200, image: 'paneer chilli.png', desc: 'Cottage cheese cubes in spicy Indo-Chinese gravy', popular: true },
+          { name: 'Veg Manchurian', price: 190, image: 'vej manchuran.png', desc: 'Mixed vegetable balls in rich Manchurian sauce', popular: true },
+          { name: 'Paneer Pakoda', price: 150, image: 'paneer pakoda.png', desc: 'Gram flour coated cottage cheese fritters', popular: false },
+          { name: 'Chana Roast', price: 90, image: 'chana roast.png', desc: 'Roasted chickpeas with special masala seasoning', popular: false }
+        ]
+      },
+      'starters-nonveg': {
+        title: 'Non-Veg Starters',
+        items: [
+          { name: 'Chicken Chilli', price: 200, image: 'chicken chilli.jpg', desc: 'Boneless chicken tossed in spicy chilli sauce', popular: true },
+          { name: 'Chicken Lollipop', price: 170, image: 'chicken lollipop.jpg', desc: 'Frenched chicken wings in spicy marinade', popular: true },
+          { name: 'Chicken Fry', price: 180, image: 'chicken fry.png', desc: 'Traditional style fried chicken with curry leaves', popular: false },
+          { name: 'Chicken 65', price: 210, image: 'chicken 65.png', desc: 'Deep fried spicy chicken with south Indian spices', popular: true },
+          { name: 'Chicken Kentucky', price: { full: 400, half: 220 }, image: 'chicken kantake.png', desc: 'Crispy fried chicken in Kentucky style', popular: true, sizes: true },
+          { name: 'Fair Vajri', price: 120, image: 'fair vaijri.png', desc: 'Traditional preparation with special spices', popular: false },
+          { name: 'Mutton Fry', price: 230, image: 'mutton fry.png', desc: 'Tender mutton pieces fried with onion and spices', popular: true },
+          { name: 'Paplet Fry', price: 320, image: 'paplet fry.png', desc: 'Fresh pomfret fish fry (1 piece)', popular: true }
+        ]
+      },
+      'main-veg': {
+        title: 'Veg Main Course',
+        items: [
+          { name: 'Dal Tadka', price: 150, image: 'Dal tadka.png', desc: 'Yellow lentils tempered with cumin and garlic', popular: true },
+          { name: 'Aalu Mattar', price: 150, image: 'Aloo matar.png', desc: 'Potato and green peas in tomato gravy', popular: false },
+          { name: 'Shev Bhaji', price: 150, image: 'shev bhaji.png', desc: 'Maharashtrian style gravy with crunchy shev', popular: false },
+          { name: 'Palak Paneer', price: 220, image: 'palak paneer.png', desc: 'Cottage cheese in smooth spinach gravy', popular: true },
+          { name: 'Paneer Butter Masala', price: 220, image: 'paneer butter masala.png', desc: 'Rich and creamy cottage cheese curry', popular: true },
+          { name: 'Mix Veg', price: 200, image: 'mix veg.png', desc: 'Seasonal vegetables in mild gravy', popular: false },
+          { name: 'Muttar Paneer', price: 220, image: 'mutter paneer.png', desc: 'Cottage cheese with green peas', popular: false },
+          { name: 'Green Peas Masala', price: 150, image: 'green peace masala.png', desc: 'Green peas in rich onion-tomato gravy', popular: false },
+          { name: 'Pithla', price: 120, image: 'pittla.png', desc: 'Traditional besan curry', popular: false },
+          { name: 'Baigan Masala', price: 120, image: 'baingan masala.png', desc: 'Stuffed eggplant in spicy gravy', popular: false },
+          { name: 'Kaju Curry', price: 220, image: 'kaju kari.png', desc: 'Cashew nuts in creamy sauce', popular: true },
+          { name: 'Kaju Paneer', price: 250, image: 'kaju paneer.png', desc: 'Cashews and cottage cheese in rich gravy', popular: true },
+          { name: 'Veg Bhuna', price: 220, image: 'veg bunna.png', desc: 'Dry vegetable preparation with spices', popular: false },
+          { name: 'Veg Handi', price: 210, image: 'veg handi.png', desc: 'Mixed vegetables cooked in clay pot', popular: true },
+          { name: 'Shevga Masala', price: 150, image: 'shevga masala.png', desc: 'Drumstick in spicy gravy', popular: false },
+          { name: 'Paneer Tikka Masala', price: 220, image: 'paneer tikka masala.png', desc: 'Grilled cottage cheese in tikka gravy', popular: true }
+        ]
+      },
+      'main-nonveg': {
+        title: 'Non-Veg Main Course',
+        items: [
+          { name: 'Chicken Biryani', price: { half: 150, full: 250 }, image: 'chicken briyani.jpg', desc: 'Aromatic basmati rice with spiced chicken', popular: true, sizes: true },
+          { name: 'Chicken Masala', price: 220, image: 'chicken masala.png', desc: 'Chicken in thick onion-tomato gravy', popular: true },
+          { name: 'Mutton Masala', price: 250, image: 'mutton masala.png', desc: 'Tender mutton in spicy masala gravy', popular: true },
+          { name: 'Butter Chicken', price: 240, image: 'butter chicken.png', desc: 'Creamy tomato-based chicken curry', popular: true },
+          { name: 'Chicken Khurma', price: 240, image: 'chicken korma.png', desc: 'Mild creamy chicken with nuts', popular: false },
+          { name: 'Chicken Navabi', price: 260, image: 'chicken nawabi.png', desc: 'Royal style chicken preparation', popular: false },
+          { name: 'Chicken Hyderabadi', price: 260, image: 'chicken hydrabadi.png', desc: 'Spicy Hyderabadi style chicken', popular: true },
+          { name: 'Mutton Hyderabadi', price: 310, image: 'mutton hydrabadi.png', desc: 'Authentic Hyderabadi mutton curry', popular: true },
+          { name: 'Chicken Handi', price: { half: 350, full: 650 }, image: 'chicken handi.png', desc: 'Chicken cooked in traditional clay pot', popular: true, sizes: true },
+          { name: 'Mutton Handi', price: { half: 430, full: 800 }, image: 'mutton handi.png', desc: 'Mutton slow cooked in clay pot', popular: true, sizes: true },
+          { name: 'Mutton Biryani', price: 320, image: 'mutton biryani.png', desc: 'Fragrant rice with tender mutton pieces', popular: true }
+        ]
+      },
+      'rice': {
+        title: 'Rice & Indian Breads',
+        items: [
+          { name: 'Steam Rice', price: { half: 70, full: 120 }, image: 'steamrice.png', desc: 'Plain steamed basmati rice', popular: false, sizes: true },
+          { name: 'Jeera Rice', price: { half: 80, full: 130 }, image: 'jeerarice.png', desc: 'Cumin flavored basmati rice', popular: false, sizes: true },
+          { name: 'Masala Rice', price: { half: 90, full: 150 }, image: 'masalarice.png', desc: 'Spiced rice with vegetables', popular: false, sizes: true },
+          { name: 'Chicken Rice', price: 170, image: 'chickenrice.png', desc: 'Rice with chicken pieces and spices', popular: true },
+          { name: 'Chicken Triple Rice', price: 210, image: 'chickentripplerice.png', desc: 'Triple flavored chicken rice', popular: true },
+          { name: 'Roti', price: 15, image: 'roti.png', desc: 'Whole wheat tandoori roti', popular: false },
+          { name: 'Butter Roti', price: 20, image: 'butterroti.png', desc: 'Roti brushed with butter', popular: false },
+          { name: 'Bhakri (Bajri)', price: 25, image: 'bhakribazri.png', desc: 'Pearl millet flatbread', popular: false },
+          { name: 'Bhakri (Jwari)', price: 25, image: 'bharijowar.png', desc: 'Sorghum flatbread', popular: false }
+        ]
+      },
+      'drinks': {
+        title: 'Bar & Beverages',
+        items: [
+          { name: 'Royal Stag', price: { '90ml': 160, '180ml': 310 }, image: 'Royalstag.jpg', desc: 'Premium blended whisky', popular: true, sizes: true },
+          { name: 'McDowell\'s No.1', price: { '90ml': 145, '180ml': 280 }, image: 'mcd 11.png', desc: 'Smooth Indian whisky', popular: true, sizes: true },
+          { name: 'Signature', price: { '90ml': 280, '180ml': 550 }, image: 'signature.png', desc: 'Premium whisky blend', popular: false, sizes: true },
+          { name: 'Officer\'s Choice', price: { '90ml': 130, '180ml': 220 }, image: 'ocs.png', desc: 'Popular Indian whisky', popular: true, sizes: true },
+          { name: 'Blender\'s Pride', price: { '90ml': 280, '180ml': 550 }, image: 'blrnder pride.png', desc: 'Premium blended Scotch', popular: true, sizes: true },
+          { name: 'Teacher\'s', price: { '90ml': 530, '180ml': 1000 }, image: 'teachers.png', desc: 'Highland cream whisky', popular: false, sizes: true },
+          { name: 'Old Monk', price: { '90ml': 145, '180ml': 280 }, image: 'Oldmonk.jpg', desc: 'Iconic Indian dark rum', popular: true, sizes: true },
+          { name: 'Bacardi Black', price: { '90ml': 160, '180ml': 310 }, image: 'bacardi.png', desc: 'Premium dark rum', popular: false, sizes: true },
+          { name: 'Kingfisher', price: { '330ml': 150, '650ml': 240 }, image: 'Kingfisher.jpg', desc: 'Premium lager beer', popular: true, sizes: true },
+          { name: 'Budweiser', price: { '330ml': 200, '650ml': 320 }, image: 'Budwiser.png', desc: 'American style lager', popular: true, sizes: true },
+          { name: 'Tuborg', price: { '330ml': 160, '650ml': 250 }, image: 'Tuborg.jpg', desc: 'Danish pilsner', popular: false, sizes: true },
+          { name: 'Port Wine 1000', price: { '375ml': 250, '750ml': 500 }, image: 'SulaPort1000.jpg', desc: 'Sweet fortified wine', popular: true, sizes: true },
+          { name: 'Magic Moments', price: { '90ml': 180, '180ml': 350 }, image: 'magic moment regular.png', desc: 'Premium vodka', popular: true, sizes: true },
+          { name: 'Romanov', price: { '90ml': 130, '180ml': 250 }, image: 'romanov regular.png', desc: 'Smooth vodka', popular: false, sizes: true }
+        ]
+      }
+    };
+
+    // Cart State
+    let cart = [];
+    let currentCategory = 'all';
+
+    // Authentication State
+    let currentUser = null;
+    let authToken = null;
+
+    // Check for existing session on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderMenu();
+      updateCartUI();
+      checkAuthStatus();
+      
+      // Search functionality
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        if (query.length > 0) {
+          searchItems(query);
+        } else {
+          renderMenu();
+        }
+      });
+    });
+
+    function renderSection(container, key, data) {
+      const section = document.createElement('section');
+      section.id = key;
+      section.innerHTML = `
+        <div class="section-header">
+          <h2 class="section-title">
+            ${data.title}
+            <span class="section-count">${data.items.length}</span>
+          </h2>
+        </div>
+        <div class="menu-grid">
+          ${data.items.map((item, idx) => createCard(item, key, idx)).join('')}
+        </div>
+      `;
+      container.appendChild(section);
+    }
+
+    function createCard(item, category, idx) {
+      const isPopular = item.popular ? 'featured' : '';
+      const priceDisplay = typeof item.price === 'object' 
+        ? `₹${Object.values(item.price)[0]}`
+        : `₹${item.price}`;
+      
+      const sizeOptions = item.sizes
+        ? Object.entries(item.price).map(([size, price], i) => 
+            `<option value="${price}" data-size="${size}">${size} - ₹${price}</option>`
+          ).join('')
+        : `<option value="${item.price}">Regular - ₹${item.price}</option>`;
+
+      // Escape the item name for safe use in onclick handlers
+      const escapedName = item.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
+
+      return `
+        <article class="menu-card ${isPopular}" style="animation-delay: ${idx * 0.1}s">
+          <div class="card-image">
+            <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--bg-cream), var(--bg-warm))'">
+            ${item.popular ? '<span class="card-badge">★ Popular</span>' : ''}
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">${item.name}</h3>
+              <div class="card-price" id="price-${category}-${idx}">${priceDisplay}</div>
+            </div>
+            <p class="card-desc">${item.desc}</p>
+            <div class="card-actions">
+              <div class="size-selector">
+                <select onchange="updatePrice('${category}', ${idx}, this)">
+                  ${sizeOptions}
+                </select>
+              </div>
+              <button class="add-btn" onclick="addToCart('${escapedName}', '${category}', ${idx})">
+                Add 
+                <span>+</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function updatePrice(category, idx, select) {
+      const selected = select.options[select.selectedIndex];
+      const price = selected.value;
+      const display = document.getElementById(`price-${category}-${idx}`);
+      display.textContent = `₹${price}`;
+    }
+
+    function filterCategory(category) {
+      currentCategory = category;
+      
+      // Update pills
+      document.querySelectorAll('.pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      renderMenu();
+      
+      // Smooth scroll to content
+      if (category !== 'all') {
+        document.getElementById('menuContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function searchItems(query) {
+      const container = document.getElementById('menuContainer');
+      container.innerHTML = '';
+      
+      let foundItems = [];
+      
+      Object.keys(menuData).forEach(key => {
+        const items = menuData[key].items.filter(item => 
+          item.name.toLowerCase().includes(query) || 
+          item.desc.toLowerCase().includes(query)
+        );
+        if (items.length > 0) {
+          foundItems.push({ category: key, title: menuData[key].title, items });
+        }
+      });
+
+      if (foundItems.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 4rem 2rem; color: var(--text-light);">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🔍</div>
+            <h3>No items found</h3>
+            <p>Try searching for something else</p>
+          </div>
+        `;
+        return;
+      }
+
+      foundItems.forEach(({ category, title, items }) => {
+        const section = document.createElement('section');
+        section.innerHTML = `
+          <div class="section-header">
+            <h2 class="section-title">
+              ${title}
+              <span class="section-count">${items.length}</span>
+            </h2>
+          </div>
+          <div class="menu-grid">
+            ${items.map((item, idx) => createCard(item, category, idx)).join('')}
+          </div>
+        `;
+        container.appendChild(section);
+      });
+    }
+
+    // Cart Functions
+    function addToCart(name, category, idx) {
+      const item = menuData[category].items[idx];
+      
+      // Find the select element more robustly - look for the card containing this item
+      let select = null;
+      const cards = document.querySelectorAll('.menu-card');
+      
+      for (let card of cards) {
+        const titleElement = card.querySelector('.card-title');
+        if (titleElement && titleElement.textContent.trim() === name) {
+          select = card.querySelector('select');
+          break;
+        }
+      }
+      
+      // If still not found, try the original method as fallback
+      if (!select) {
+        select = document.querySelector(`#${category} .menu-card:nth-child(${idx + 1}) select`);
+      }
+      
+      if (!select) {
+        console.error('Could not find select element for item:', name);
+        showToast('Error adding item to cart');
+        return;
+      }
+      
+      const selected = select.options[select.selectedIndex];
+      const price = parseInt(selected.value);
+      const size = selected.getAttribute('data-size') || 'Regular';
+      
+      const existingItem = cart.find(cartItem => 
+        cartItem.name === name && cartItem.size === size
+      );
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          name,
+          price,
+          size,
+          quantity: 1,
+          image: item.image
+        });
+      }
+
+      updateCartUI();
+      showToast(`${name} added to cart!`);
+      
+      // Animate cart button
+      const cartBtn = document.querySelector('.cart-btn');
+      cartBtn.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        cartBtn.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    function updateCartUI() {
+      const cartCount = document.getElementById('cartCount');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="cart-empty">
+            <div class="cart-empty-icon">🍽️</div>
+            <p>Your cart is empty</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-light);">Add some delicious items!</p>
+          </div>
+        `;
+        cartTotal.textContent = '₹0';
+        return;
+      }
+
+      cartItems.innerHTML = cart.map((item, idx) => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <div class="cart-item-title">${item.name}</div>
+            <div class="cart-item-meta">${item.size}</div>
+            <div class="cart-item-actions">
+              <button class="qty-btn" onclick="updateQuantity(${idx}, -1)">−</button>
+              <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.quantity}</span>
+              <button class="qty-btn" onclick="updateQuantity(${idx}, 1)">+</button>
+              <button class="remove-item" onclick="removeItem(${idx})">Remove</button>
+            </div>
+          </div>
+          <div class="cart-item-price">₹${item.price * item.quantity}</div>
+        </div>
+      `).join('');
+
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      cartTotal.textContent = `₹${total}`;
+    }
+
+    function updateQuantity(idx, change) {
+      cart[idx].quantity += change;
+      if (cart[idx].quantity <= 0) {
+        cart.splice(idx, 1);
+      }
+      updateCartUI();
+    }
+
+    function removeItem(idx) {
+      cart.splice(idx, 1);
+      updateCartUI();
+    }
+
+    function toggleCart() {
+      const sidebar = document.getElementById('cartSidebar');
+      const overlay = document.getElementById('cartOverlay');
+      
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+    }
+
+    function placeOrder() {
+      if (cart.length === 0) {
+        showToast('Your cart is empty!');
+        return;
+      }
+      
+      // Check if user is logged in
+      if (!currentUser) {
+        showToast('Please sign in to place an order');
+        toggleAuthModal();
+        return;
+      }
+      
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const orderData = {
+        items: cart,
+        total: total,
+        timestamp: new Date().toISOString(),
+        status: 'pending'
+      };
+      
+      // Save to database
+      saveOrderToDatabase(orderData);
+      
+      // Clear cart after placing order
+      cart = [];
+      updateCartUI();
+      toggleCart();
+      
+      // Show success notification
+      showToast('🎉 Order placed successfully! We will contact you soon.');
+    }
+
+    async function saveOrderToDatabase(orderData) {
+      try {
+        // Try to connect to your MySQL backend first
+        const response = await fetch('http://localhost:3000/api/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({
+            items: orderData.items,
+            total: orderData.total,
+            notes: 'Order from website'
+          })
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Order saved to MySQL:', result);
+          return;
+        } else {
+          // Show actual error from server
+          const errorData = await response.json();
+          console.error('Server error:', errorData);
+          showToast(`Server error: ${errorData.error || 'Unknown error'}`);
+          throw new Error(`Server error: ${response.status}`);
+        }
+        
+      } catch (error) {
+        console.error('Order save error:', error);
+        console.log('Saving to localStorage as fallback');
+        
+        // Save to localStorage as backup
+        const orders = JSON.parse(localStorage.getItem('hotelOrders') || '[]');
+        const newOrder = {
+          id: Date.now(),
+          ...orderData,
+          customerInfo: {
+            name: currentUser ? currentUser.name : 'Walk-in Customer',
+            phone: currentUser ? currentUser.phone : 'N/A',
+            address: currentUser ? currentUser.address : 'Raj Chamber, Kothla-Stand, Nagar'
+          }
+        };
+        orders.push(newOrder);
+        localStorage.setItem('hotelOrders', JSON.stringify(orders));
+        
+        console.log('Order saved to local storage:', newOrder);
+        console.log('To connect to MySQL, start the server with: npm start');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Render Menu
+    function renderMenu() {
+      const container = document.getElementById('menuContainer');
+      container.innerHTML = '';
+
+      if (currentCategory === 'all') {
+        Object.keys(menuData).forEach(key => {
+          renderSection(container, key, menuData[key]);
+        });
+      } else {
+        if (menuData[currentCategory]) {
+          renderSection(container, currentCategory, menuData[currentCategory]);
+        }
+      }
+    }
+
+    // Close cart on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const sidebar = document.getElementById('cartSidebar');
+        if (sidebar.classList.contains('active')) {
+          toggleCart();
+        }
+      }
+    });
+
+    // Authentication Functions
+    function toggleAuthModal() {
+      const modal = document.getElementById('authModal');
+      const overlay = document.getElementById('authOverlay');
+      
+      modal.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : '';
+    }
+
+    function switchToSignup() {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('signupForm').classList.remove('hidden');
+      document.getElementById('authTitle').textContent = 'Create Account';
+    }
+
+    function switchToLogin() {
+      document.getElementById('signupForm').classList.add('hidden');
+      document.getElementById('loginForm').classList.remove('hidden');
+      document.getElementById('authTitle').textContent = 'Welcome to Hotel Relax';
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          currentUser = data.user;
+          authToken = data.token;
+          
+          // Store in localStorage
+          localStorage.setItem('authToken', authToken);
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+          
+          updateUserUI();
+          toggleAuthModal();
+          showToast(`🎉 Welcome back, ${currentUser.name}!`);
+          
+          // Clear form
+          document.getElementById('loginEmail').value = '';
+          document.getElementById('loginPassword').value = '';
+        } else {
+          showToast(data.error || 'Login failed');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showToast('Connection error. Please try again.');
+      }
+    }
+
+    async function handleSignup(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const phone = document.getElementById('signupPhone').value;
+      const password = document.getElementById('signupPassword').value;
+      const address = document.getElementById('signupAddress').value;
+      
+      if (password.length < 6) {
+        showToast('Password must be at least 6 characters');
+        return;
+      }
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, email, phone, password, address })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          currentUser = data.user;
+          authToken = data.token;
+          
+          // Store in localStorage
+          localStorage.setItem('authToken', authToken);
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+          
+          updateUserUI();
+          toggleAuthModal();
+          showToast(`🎉 Welcome to Hotel Relax, ${currentUser.name}!`);
+          
+          // Clear form
+          document.getElementById('signupName').value = '';
+          document.getElementById('signupEmail').value = '';
+          document.getElementById('signupPhone').value = '';
+          document.getElementById('signupPassword').value = '';
+          document.getElementById('signupAddress').value = '';
+        } else {
+          showToast(data.error || 'Registration failed');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        showToast('Connection error. Please try again.');
+      }
+    }
+
+    function checkAuthStatus() {
+      const token = localStorage.getItem('authToken');
+      const user = localStorage.getItem('currentUser');
+      
+      if (token && user) {
+        authToken = token;
+        currentUser = JSON.parse(user);
+        updateUserUI();
+      }
+    }
+
+    function updateUserUI() {
+      const loginBtn = document.getElementById('loginBtn');
+      const userInfo = document.getElementById('userInfo');
+      const userAvatar = document.getElementById('userAvatar');
+      const userName = document.getElementById('userName');
+      
+      if (currentUser) {
+        // Show user info
+        loginBtn.classList.add('hidden');
+        userInfo.classList.remove('hidden');
+        
+        // Set user avatar (first letter of name)
+        const initial = currentUser.name.charAt(0).toUpperCase();
+        userAvatar.textContent = initial;
+        userName.textContent = currentUser.name;
+      } else {
+        // Show login button
+        loginBtn.classList.remove('hidden');
+        userInfo.classList.add('hidden');
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      authToken = null;
+      
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('currentUser');
+      
+      updateUserUI();
+      showToast('You have been logged out');
+    }
+
+    function showUserMenu() {
+      // Simple logout for now - can be expanded to show dropdown menu
+      if (confirm('Do you want to logout?')) {
+        logout();
+      }
+    }
+  </script>
+</body>
+</html>
