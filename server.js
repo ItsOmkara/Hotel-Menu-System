@@ -213,6 +213,9 @@ function initializeDatabase() {
 // Authentication Routes
 app.post('/api/auth/register', async (req, res) => {
   try {
+    console.log('Registration request received');
+    console.log('Request body:', req.body);
+    
     const { name, email, phone, password, address } = req.body;
 
     // Validate input
@@ -224,10 +227,12 @@ app.post('/api/auth/register', async (req, res) => {
     const checkUserQuery = 'SELECT id FROM users WHERE email = ? OR phone = ?';
     connection.query(checkUserQuery, [email, phone], async (err, results) => {
       if (err) {
+        console.error('Database error checking user:', err);
         return res.status(500).json({ error: 'Database error' });
       }
 
       if (results.length > 0) {
+        console.log('User already exists');
         return res.status(400).json({ error: 'User with this email or phone already exists' });
       }
 
@@ -242,8 +247,11 @@ app.post('/api/auth/register', async (req, res) => {
 
       connection.query(insertUserQuery, [name, email, phone, hashedPassword, address], (err, result) => {
         if (err) {
+          console.error('Error creating user:', err);
           return res.status(500).json({ error: 'Failed to create user' });
         }
+
+        console.log('User created successfully:', result.insertId);
 
         // Create JWT token
         const token = jwt.sign(
@@ -266,6 +274,7 @@ app.post('/api/auth/register', async (req, res) => {
       });
     });
   } catch (error) {
+    console.error('Registration error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
